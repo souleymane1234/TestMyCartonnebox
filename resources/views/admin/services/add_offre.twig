@@ -1,0 +1,252 @@
+{% extends "layouts.admin.app" %}
+
+
+{% block content %}
+
+	<!-- Content Wrapper. Contains page content -->
+	<div
+		class="content-wrapper">
+
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>Ressources</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="#">Accueil</a>
+							</li>
+							<li class="breadcrumb-item active">Services</li>
+							<li class="breadcrumb-item active">Ressources</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+
+		<hr/>
+
+		<!-- Main content -->
+
+		<!-- Main content -->
+			<section class="content"> <div class="container-fluid">
+
+				<div class="row">
+					<div
+						class="col-12">
+
+
+						<!-- Main content -->
+						<div
+							class="invoice p-3 mb-3">
+							<!-- title row -->
+
+							<form name="attributesForm" id="attributesForm" method="POST" action="{{ url('add-offres', servicedata.id) }}" enctype="multipart/form-data">
+								{{csrf_field()}}
+								<input type="hidden" name="service_id" value="{{ servicedata.id }}">
+
+								<div class="col-md-10">
+									<div class="form-group mb-3">
+										<label for="category_name">Nom du service:</label>&nbsp;{{ servicedata.nom_service }}
+									</div>
+									<div class="form-group mb-3">
+										<label for="product_code">Nom du partenaire:
+										</label>&nbsp;{{ servicedata.partenaires.nom_partenaire }}
+									</div>
+									<div class="form-group mb-3">
+										<label for="product_color">Nom de la catégorie:
+										</label>&nbsp;{{ servicedata.categories.nom_categorie }}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Titre de la vidéo</label>
+												<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Titre de la vidéo" name="title" required>
+												<p style="color: red">
+													{{ errors.first('nom_service') }}
+												</p>
+											</div>
+									</div>
+
+									<div class="col-md-4">
+											<label for="exampleInputEmail1">Images</label>
+												<div class="input-group hdtuto control-group lst increment">
+													<input type="file" name="filenames[]" class="myfrm form-control">
+													<div class="input-group-btn">
+														<button class="btn btn-success" type="button">
+															<i class="fldemo glyphicon glyphicon-plus"></i>Ajouter
+														</button>
+													</div>
+												</div>
+									</div>
+                                    <div class="col-md-4">
+											<div class="form-group">
+												<label for="exampleInputLangue">Langue de la vidéo</label>
+												<input type="text" class="form-control" id="exampleInputLangue" placeholder="Langue de la vidéo" name="language" required>
+												<p style="color: red">
+													{{ errors.first('language') }}
+												</p>
+											</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Prix unitaire</label>
+											<input type="number" class="form-control" id="exampleInputEmail1" placeholder="Entrez la description de la vidéo" name="price" required value='0'>
+										</div>
+									</div>
+									<div class="col-md-4">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Lien de la vidéo</label>
+												<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Entrez l'url de de la vidéo" name="link" required>
+											</div>
+									</div>
+									<div class="col-md-4">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Code souscription SMS</label>
+												<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Code souscription SMS" name="code_sms" required>
+											</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Description</label>
+											<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Entrez la description de la vidéo" name="description" required>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group text-center mb-3">
+											<button type="submit" class="btn btn-info">Ajouter ressource
+											</button>
+										</div>
+									</div>
+									<hr/>
+
+
+								</div>
+								<!-- Table row -->
+
+								<!-- /.row -->
+							</form>
+
+								<div class="card">
+									<div class="card-body">
+										<div class="table-responsive">
+											<table id="example" class="table table-striped table-bordered" style="width:100%">
+												<thead>
+													<tr>
+														<th>Id</th>
+														<th>Titre</th>
+														<th>Lien</th>
+														<th>Nbre Vue</th>
+														<th>Prix</th>
+														
+														<th>Actions</th>
+														<th>status</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for ressource in servicedata['ressources'] %}
+
+														<input style="display: none;" type="text" name="attrId[]" value="{{ ressource.id }}">
+														<tr>
+															<td>
+																{{ ressource['id'] }}
+															</td>
+															<td>
+																<p>{{ ressource['title'] }}<br/> {{ressource['description']}} </p>
+															</td>
+															<td>
+																<p>{{ ressource['link'] }}</p>
+															</td>
+															<td>
+																<p>{{ ressource['number_views'] }}</p>
+															</td>
+															<td>
+																<p>{{ ressource['price'] }}</p>
+
+															</td>
+															<td>
+															<div class="d-flex order-actions">
+																<a href="{{ url('edit-offres' , offre.id) }}" title="Modifier offre">
+																	<i class="fas fa-edit"></i>
+																</a>
+																{% if offres.status == 0 %}
+																<a style="color:red; margin-left:10px" title="Désactiver offre" href="#" class="confirmDelete ms-3" record="attribute" recordid="{{ ressource['id'] }}" data-toggle="modal"   data-target="#desactive-{{ offre.id }}">
+																	<i class="fa fa-times"></i>
+																</a>
+																{% endif %}
+															</div>
+
+																													&nbsp;&nbsp;
+
+														{# <div class="modal fade" id="desactive-{{ service.id }}">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h4 class="modal-title">Désactiver service</h4>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
+																	</div>
+
+																	<form role="form" method="POST" action="{{ route('desactivate.offres', offre.id) }}">
+																		{{csrf_field()}}
+																		<div class="modal-body">
+																			<input type="hidden" value="{{ service.id }}" name="id">
+																			<p>Voulez-vous désactivé ce service
+																				<b>
+																					{{ service.nom_service}}</b>?
+																			</p>
+																		</div>
+																		<div class="modal-footer justify-content-between">
+																			<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+																			{% if service.status == 0 %}
+																			<button type="submit" class="btn btn-primary" >Désactivé</button>
+																			{% endif %}
+																		</div>
+
+																	</form>
+
+																</div>
+																<!-- /.modal-content -->
+															</div>
+															<!-- /.modal-dialog -->
+														</div> #}
+															</td>
+															{% if o.status == 0 %}
+													<td>Actif</td>
+												{% else %}
+													<td>Désactivé</td>
+												{% endif %}
+															</td>
+														</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+						</div>
+						<!-- /.invoice -->
+					</div>
+					<!-- /.col -->
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
+
+<!-- /.content-wrapper -->{% endblock %}
+
+

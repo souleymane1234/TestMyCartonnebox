@@ -1,0 +1,14 @@
+services:
+  mycartoonboxbackend:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000  # Exposer le port 9000 pour PHP-FPM
+    volumes:
+      - .:/var/www/html/mycartoonboxbackend
+    networks:
+      - db_my_cartoonbox_backend
+networks:
+  db_my_cartoonbox_backend:

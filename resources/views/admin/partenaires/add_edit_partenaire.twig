@@ -1,0 +1,249 @@
+{% extends "layouts.admin.app" %}
+
+
+{% block content %}
+
+	<!-- Content Wrapper. Contains page content -->
+	<div
+		class="content-wrapper">
+
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>Partenaires</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="#">Accueil</a>
+							</li>
+							<li class="breadcrumb-item active">Partenaires</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+
+		<hr/>
+
+		<!-- Main content -->
+		<!-- Main content -->
+			<section class="content"> <div class="container-fluid">
+				<div
+					class="row">
+					<!-- left column -->
+					<div
+						class="col-md-12">
+						<!-- general form elements -->
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title">{{ title }}</h3>
+							</div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form {% if partenairedata['id'] is empty %} action="{{ url('add-edit-partenaire') }}" {% else %} action="{{ url('add-edit-partenaire' , partenairedata['id']) }}" {% endif %} method="POST" enctype="multipart/form-data">
+								{{csrf_field()}}
+
+								<div class="card-body">
+
+									<div class="row">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Nom du partenaire</label>
+												<input type="text" class="form-control"  placeholder="Entrez le nom du partenaire" name="nom_partenaire" {% if partenairedata['nom_partenaire'] is not empty %} value="{{ partenairedata['nom_partenaire'] }}" {% else %} value="{{ old('nom_partenaire ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Logo</label>
+												<input type="file" class="form-control"  name="logo" {% if partenairedata['logo'] is not empty %} value="{{ partenairedata['logo'] }}" {% else %} value="{{ old('logo') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Url video de couverture </label>
+												<input type="text" class="form-control"  placeholder="Entrez l'url de la video de couverture" name="moovie_cover" {% if partenairedata['moovie_cover'] is not empty %} value="{{ partenairedata['moovie_cover'] }}" {% else %} value="{{ old('moovie_cover ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Image de couverture</label>
+												<input type="file" class="form-control"  name="picture_cover" {% if partenairedata['picture_cover'] is not empty %} value="{{ partenairedata['picture_cover'] }}" {% else %} value="{{ old('picture_cover') }}" {% endif %}>
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Code Ussd de souscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez le code ussd de souscription" name="code_ussd_souscription" {% if partenairedata['code_ussd_souscription'] is not empty %} value="{{ partenairedata['code_ussd_souscription'] }}" {% else %} value="{{ old('code_ussd_souscription ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Code Ussd de dessouscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez le code ussd de dessouscription" name="code_ussd_dessouscription" {% if partenairedata['code_ussd_dessouscription'] is not empty %} value="{{ partenairedata['code_ussd_dessouscription'] }}" {% else %} value="{{ old('code_ussd_dessouscription ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Url Ussd de souscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez l'url de souscription ussd" name="url_ussd_souscription" {% if partenairedata['url_ussd_souscription'] is not empty %} value="{{ partenairedata['url_ussd_souscription'] }}" {% else %} value="{{ old('url_ussd_souscription ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Code Ussd de dessouscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez l'url de dessouscription ussd" name="url_ussd_dessouscription" {% if partenairedata['url_ussd_dessouscription'] is not empty %} value="{{ partenairedata['url_ussd_dessouscription'] }}" {% else %} value="{{ old('url_ussd_dessouscription ') }}" {% endif %}>
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Mot clé de souscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez le mot clé de souscription SMS" name="keyword" {% if partenairedata['keyword'] is not empty %} value="{{ partenairedata['keyword'] }}" {% else %} value="{{ old('keyword ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Periode de soucription par sms</label>
+												<input type="number" class="form-control"  placeholder="Entrez la periode en chiffre uniquement" name="periode_subscription_ussd_sms" {% if partenairedata['periode_subscription_ussd_sms'] is not empty %} value="{{ partenairedata['periode_subscription_ussd_sms'] }}" {% else %} value="{{ old('periode_subscription_ussd_sms ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+											<label for="exampleInputEmail1">Forfait Mobile Money</label>
+												<div class="field_wrapper">
+												
+													{% if partenairedata is not empty and partenairedata['forfaits_mobile_money'] is not empty  %}
+														{% for forfait in partenairedata['forfaits_mobile_money'] %}
+															<div class="row">
+
+
+																<input  class="form-control m-1 col-md-4" id="periode" type="text" name="periodeMobileMoney[]" value="{{ forfait['periode'] }}" placeholder="Période" required=""/>
+																<input  class="form-control m-1 col-md-4" id="tarif" type="number" name="tarifMobileMoney[]" value="{{ forfait['tarif'] }}" placeholder="Tarif" required=""/>
+																<div class="col-md-2">
+																	<div class="container text-center">
+																		<div class="row align-items-start">
+																			<a href="javascript:void(0);" class="add_button_partenaire_mobile col-md-1" title="Ajouter">
+																				<i class="fa fa-plus-circle" style="font-size: 25px;"></i>
+																			</a>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+														{% endfor %}
+													{% else %}
+														<div class="row">
+
+
+															<input  class="form-control m-1 col-md-4" id="periode" type="text" name="periodeMobileMoney[]" placeholder="Période" required=""/>
+															<input  class="form-control m-1 col-md-4" id="tarif" type="number" name="tarifMobileMoney[]" placeholder="Tarif" required=""/>
+
+															<div class="col-md-2">
+																<div class="container text-center">
+																	<div class="row align-items-start">
+																		<a href="javascript:void(0);" class="add_button_partenaire_mobile col-md-1" title="Ajouter">
+																			<i class="fa fa-plus-circle" style="font-size: 25px;"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+											<label for="exampleInputEmail1">Forfait USSD url</label>
+												<div class="field_wrapper">
+													{% if partenairedata is not empty and partenairedata.forfaits_ussd is not empty  %}
+														{% for forfait in partenairedata['forfaits_ussd'] %}
+															<div class="row">
+
+
+																<input  class="form-control m-1 col-md-4" id="periode" type="text" name="periodeUssd[]" value="{{ forfait['periode'] }}" placeholder="Période" required=""/>
+																<input  class="form-control m-1 col-md-4" id="tarif" type="number" name="tarifUssd[]" value="{{ forfait['tarif'] }}" placeholder="Tarif" required=""/>
+																<a href="javascript:void(0);" class="add_button_partenaire_ussd col-md-1" title="Ajouter">
+																	<i class="fa fa-plus-circle" style="font-size: 25px;"></i>
+																</a>
+
+															</div>
+														{% endfor %}
+													{% else %}
+														<div class="row">
+
+
+															<input  class="form-control m-1 col-md-4" id="periode" type="text" name="periodeUssd[]" placeholder="Période" required=""/>
+															<input  class="form-control m-1 col-md-4" id="tarif" type="number" name="tarifUssd[]" placeholder="Tarif" required=""/>
+
+															<div class="col-md-2">
+																<div class="container text-center">
+																	<div class="row align-items-start">
+																		<a href="javascript:void(0);" class="add_button_partenaire_ussd col-md-1" title="Ajouter">
+																			<i class="fa fa-plus-circle" style="font-size: 25px;"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Coût du message de souscription</label>
+												<input type="text" class="form-control"  placeholder="Entrez le coût du message de souscription" name="cout_subcription_sms" {% if partenairedata['cout_subcription_sms'] is not empty %} value="{{ partenairedata['cout_subcription_sms'] }}" {% else %} value="{{ old('cout_subcription_sms ') }}" {% endif %}>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="exampleInputEmail1">Numero de souscription SMS</label>
+												<input type="text" class="form-control"  placeholder="Entrez le numero du message de souscription" name="numero_sms_souscription" {% if partenairedata['numero_sms_souscription'] is not empty %} value="{{ partenairedata['numero_sms_souscription'] }}" {% else %} value="{{ old('numero_sms_souscription ') }}" {% endif %}>
+											</div>
+										</div>
+										
+
+									</div>
+
+
+								</div>
+								<!-- /.card-body -->
+
+								<div class="card-footer">
+									<button type="submit" class="btn btn-primary">{{ title}}</button>
+								</div>
+							</form>
+						</div>
+						<!-- /.card -->
+
+						<!-- general form elements -->
+
+
+					</div>
+					<!--/.col (left) -->
+
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->{% endblock %}
