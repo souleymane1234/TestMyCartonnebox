@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('abonnements:verifier')->daily(); // Vérifie chaque jour
         // $schedule->command('inspire')->hourly();
     }
 

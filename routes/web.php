@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ChaineController;
 use App\Http\Controllers\Admin\PartenaireController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\AbonnementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,9 @@ Route::group(['middleware' => ['admin']], function () {
     // Chaine
     Route::get('/chaines', [ChaineController::class, 'chaines']);
     Route::match(['get', 'post'], 'add-edit-chaine/{id?}', [ChaineController::class, 'addEditChaine']);
+
+    // Verifier abonnement 
+    Route::get('/verifier-abonnements', [AbonnementController::class, 'verifierEtMettreAJourTousLesAbonnements']);
 });
 
 // Index
